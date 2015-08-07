@@ -57,6 +57,7 @@
     "path": "^0.4.9",
     "phantomcss": "^0.10.1",
     "phantomjs": "1.9.8",
+    "slimerjs": "^0.9.6",
     "temporary": "0.0.8"
   },
   "peerDependencies": {

@@ -46,6 +46,7 @@ var casper = require('casper').create({
 var phantomcss = require(phantomCSSPath + s + 'phantomcss.js');
 
 phantomcss.init({
+  casper: casper,
   screenshotRoot: args.screenshots,
   failedComparisonsRoot: args.failures,
   libraryRoot: phantomCSSPath, // Give absolute path, otherwise PhantomCSS fails
@@ -78,7 +79,15 @@ casper.start();
 args.test.forEach(function(testSuite) {
   phantom.casperTest = true;
   phantom.rootUrl = args.rootUrl;
+  phantom.casper = casper;
+  phantom.phantomcss = phantomcss;
   casper.then(function() {
+      
+      
+      // TODO: This happens too late!
+      
+      
+      
     phantomcss.pathToTest = path.dirname(testSuite) + '/';
   });
   require(testSuite);

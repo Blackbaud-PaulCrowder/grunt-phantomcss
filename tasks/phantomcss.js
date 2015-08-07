@@ -13,7 +13,7 @@
 
 var path = require('path');
 var tmp = require('temporary');
-var phantomBinaryPath = require('phantomjs').path;
+var phantomBinaryPath = require('slimerjs').path;
 var runnerPath = path.join(__dirname, '..', 'phantomjs', 'runner.js');
 var phantomCSSPath = path.join(__dirname, '..', 'node_modules', 'phantomcss');
 
@@ -158,6 +158,9 @@ module.exports = function(grunt) {
             }
           }
         }
+      },
+      onLog: function (message) {
+        grunt.log.writeln('Message from runner: ' + message);
       }
     };
 

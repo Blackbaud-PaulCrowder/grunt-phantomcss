@@ -42,7 +42,7 @@ module.exports = function (grunt) {
                     viewportSize: [1280, 800],
                     mismatchTolerance: 0.05,
                     waitTimeout: 5000,
-                    rootUrl: 'fixtures',
+                    rootUrl: 'http://localhost:8080/fixtures',
                     logLevel: 'warning' // debug | info | warning | error
                 },
                 src: [

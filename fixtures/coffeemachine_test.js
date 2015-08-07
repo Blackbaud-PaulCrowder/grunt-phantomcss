@@ -1,3 +1,6 @@
+var casper = phantom.casper,
+    phantomcss = phantom.phantomcss;
+
 casper.thenOpen( phantom.rootUrl + '/coffeemachine.html').then(function () {
     phantomcss.screenshot('#coffee-machine-wrapper', 'open coffee machine button');
 }).then( function () {
