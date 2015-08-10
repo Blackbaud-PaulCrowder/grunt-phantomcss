@@ -14,7 +14,7 @@
 // Get node fileSystem module and define the separator module
 var fs = require('fs');
 var s = fs.separator;
-var path =  require('path');
+var path = require(fs.workingDirectory + s + 'node_modules' + s + 'path' + s + 'path');
 
 // Parse arguments passed in from the grunt task
 var args = JSON.parse(phantom.args[0]);
@@ -82,12 +82,6 @@ args.test.forEach(function(testSuite) {
   phantom.casper = casper;
   phantom.phantomcss = phantomcss;
   casper.then(function() {
-      
-      
-      // TODO: This happens too late!
-      
-      
-      
     phantomcss.pathToTest = path.dirname(testSuite) + '/';
   });
   require(testSuite);
