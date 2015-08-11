@@ -15,7 +15,8 @@ var path = require('path');
 var tmp = require('temporary');
 var phantomBinaryPath = require('slimerjs').path;
 var runnerPath = path.join(__dirname, '..', 'phantomjs', 'runner.js');
-var phantomCSSPath = path.join(__dirname, '..', 'node_modules', 'phantomcss');
+var nodeModulesPath = path.join(__dirname, '..', 'node_modules'); 
+var phantomCSSPath = path.join(nodeModulesPath, 'phantomcss');
 
 module.exports = function(grunt) {
   grunt.registerMultiTask('phantomcss', 'CSS Regression Testing', function() {
@@ -179,6 +180,7 @@ module.exports = function(grunt) {
     // Pass necessary paths
     options.tempFile = tempFile.path;
     options.phantomCSSPath = phantomCSSPath;
+    options.nodeModulesPath = nodeModulesPath;
 
     // Remove old diff screenshots
 

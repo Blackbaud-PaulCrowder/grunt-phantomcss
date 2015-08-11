@@ -11,13 +11,15 @@
 
 'use-strict';
 
+// Parse arguments passed in from the grunt task
+var args = JSON.parse(phantom.args[0]);
+
 // Get node fileSystem module and define the separator module
 var fs = require('fs');
 var s = fs.separator;
-var path = require(fs.workingDirectory + s + 'node_modules' + s + 'path' + s + 'path');
 
-// Parse arguments passed in from the grunt task
-var args = JSON.parse(phantom.args[0]);
+// SlimerJS needs a fully-qualified path to the Node module.
+var path = require(args.nodeModulesPath + s + 'path' + s + 'path');
 
 // Get viewport arguments (width | height)
 var viewportSize = {
@@ -65,8 +67,22 @@ phantomcss.init({
     sendMessage('onComplete', allTests, noOfFails, noOfErrors);
   },
   fileNameGetter: function(root, filename) {
-    var name = phantomcss.pathToTest + args.screenshots + '/' + filename;
-    if (fs.isFile(name + '.png')) {
+    var exists,
+        name = phantomcss.pathToTest + args.screenshots + '/' + filename,
+        stats;
+    
+    try {
+      exists = fs.isFile(name + '.png');
+    } catch (ex) {
+      // When using SimerJS this call throws an error with the following result code when the file isn't found.
+      if (ex.result === 2152857606) {
+        exists = false;
+      } else {
+        throw ex;
+      }
+    }
+    
+    if (exists) {
       return name + '.diff.png';
     } else {
       return name + '.png';
