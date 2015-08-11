@@ -75,11 +75,11 @@ phantomcss.init({
       exists = fs.isFile(name + '.png');
     } catch (ex) {
       // When using SimerJS this call throws an error with the following result code when the file isn't found.
-      if (ex.result === 2152857606) {
+      //if (ex.result === 2152857606) {
         exists = false;
-      } else {
-        throw ex;
-      }
+      //} else {
+        //throw ex;
+      //}
     }
     
     if (exists) {
@@ -90,21 +90,31 @@ phantomcss.init({
   },
 });
 
+sendMessage('onLog', 'Starting casper...');
+
 casper.start();
+
+sendMessage('onLog', 'Casper started...');
+
 // Run the test scenarios
 args.test.forEach(function(testSuite) {
+  sendMessage('onLog', 'Running test suite ' + testSuite + '...');
+  
   phantom.casperTest = true;
   phantom.rootUrl = args.rootUrl;
   phantom.casper = casper;
   phantom.phantomcss = phantomcss;
   casper.then(function() {
     phantomcss.pathToTest = path.dirname(testSuite) + '/';
+    sendMessage('onLog', 'Set pathToTest to ' + phantomcss.pathToTest + '...');
   });
   require(testSuite);
   casper.then(function() {
+    sendMessage('onLog', 'Comparing session...');
     phantomcss.compareSession();
   })
   .then(function() {
+    sendMessage('onLog', 'Test suite ' testSuite + ' completed.');
     casper.test.done();
   });
 });
