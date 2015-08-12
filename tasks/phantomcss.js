@@ -194,21 +194,25 @@ module.exports = function(grunt) {
     
     grunt.verbose.writeln('Spawning Phantom binary at ' + phantomBinaryPath);
 
-    grunt.util.spawn({
-      cmd: phantomBinaryPath,
-      args: [
-        runnerPath,
-        JSON.stringify(options),
-      ],
-      opts: {
-        cwd: cwd,
-        stdio: 'inherit'
-      }
-    }, function(error, result, code) {
-      // When Phantom exits check for remaining messages one last time
-      checkForMessages(true);
+    try {
+      grunt.util.spawn({
+        cmd: phantomBinaryPath,
+        args: [
+          runnerPath,
+          JSON.stringify(options),
+        ],
+        opts: {
+          cwd: cwd,
+          stdio: 'inherit'
+        }
+      }, function(error, result, code) {
+        // When Phantom exits check for remaining messages one last time
+        checkForMessages(true);
 
-      cleanup(error);
-    });
+        cleanup(error);
+      });
+    } catch (ex) {
+      grunt.log.error('Spawning SlimerJS failed.  ' + ex.message);
+    }
   });
 };
