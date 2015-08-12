@@ -199,6 +199,7 @@ module.exports = function(grunt) {
       args: [
         runnerPath,
         JSON.stringify(options),
+        '--debug'
       ],
       opts: {
         cwd: cwd,
