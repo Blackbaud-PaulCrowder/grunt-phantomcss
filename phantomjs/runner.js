@@ -87,11 +87,11 @@ phantomcss.init({
       exists = fs.isFile(name + '.png');
     } catch (ex) {
       // When using SimerJS this call throws an error with the following result code when the file isn't found.
-      //if (ex.result === 2152857606) {
+      if (ex.result === 2152857606) {
         exists = false;
-      //} else {
+      } else {
         //throw ex;
-      //}
+      }
     }
     
     if (exists) {
@@ -126,7 +126,7 @@ args.test.forEach(function(testSuite) {
     phantomcss.compareSession();
   })
   .then(function() {
-    sendMessage('onLog', 'Test suite ' testSuite + ' completed.');
+    sendMessage('onLog', 'Test suite ' + testSuite + ' completed.');
     casper.test.done();
   });
 });
