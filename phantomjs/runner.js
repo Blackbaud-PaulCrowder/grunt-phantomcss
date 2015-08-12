@@ -32,11 +32,19 @@ var sendMessage = function() {
   fs.write(args.tempFile, JSON.stringify(Array.prototype.slice.call(arguments)) + '\n', 'a');
 };
 
+sendMessage('onLog', 'Initializing runner...');
+
 // Initialise CasperJs
 var phantomCSSPath = args.phantomCSSPath;
 
 phantom.casperPath = phantomCSSPath + s + 'node_modules' + s + 'casperjs';
+
+sendMessage('onLog', 'Casper path is ' + phantom.casperPath + '...');
+sendMessage('onLog', 'Casper bootstrap path is ' + phantom.casperPath + s + 'bin' + s + 'bootstrap.js' + '...');
+
 phantom.injectJs(phantom.casperPath + s + 'bin' + s + 'bootstrap.js');
+
+sendMessage('onLog', 'Initializing Casper...');
 
 var casper = require('casper').create({
   viewportSize: viewportSize,
@@ -44,8 +52,12 @@ var casper = require('casper').create({
   verbose: true
 });
 
+sendMessage('onLog', 'Loading PhantomCSS...');
+
 // Require and initialise PhantomCSS module
 var phantomcss = require(phantomCSSPath + s + 'phantomcss.js');
+
+sendMessage('onLog', 'Initializing PhantomCSS...');
 
 phantomcss.init({
   casper: casper,

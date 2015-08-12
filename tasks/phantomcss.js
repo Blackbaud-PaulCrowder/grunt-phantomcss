@@ -191,6 +191,8 @@ module.exports = function(grunt) {
 
     // Start watching for messages
     checkForMessages();
+    
+    grunt.verbose.writeln('Spawning Phantom binary at ' + phantomBinaryPath);
 
     grunt.util.spawn({
       cmd: phantomBinaryPath,
